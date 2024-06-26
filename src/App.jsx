@@ -14,7 +14,8 @@ const Square = ({ children, updateBoard, index }) => {
 }
 
 function App() {
-  const [board, setBoard] = useState(['x', 'x', 'x', 'o', 'o', 'o', 'x', 'o', 'x']
+  const [board, setBoard] = useState(
+    Array(9).fill(null)
   )
 
   return (
