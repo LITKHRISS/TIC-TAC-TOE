@@ -24,17 +24,19 @@ function App() {
     Array(9).fill(null)
   )
   const [turn, setTurn] = useState(TURNS.X)
+  // null means no winner, false means tie
+  const [winner, setWinner] = useState(null) 
 
   const updateBoard = (index) => {
     // dont update this position
     // if theres something in it
     if (board[index]) return
-
+    // update the baord
     const newBoard = [ ... board]
     // spread & rest operator
     newBoard[index] = turn
     setBoard(newBoard)
-
+    // change turns
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
   }
