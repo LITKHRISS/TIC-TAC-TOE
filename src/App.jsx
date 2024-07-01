@@ -39,8 +39,10 @@ function App() {
   const [winner, setWinner] = useState(null) 
 
   const checkWinner  = (boardToCheck) => {
-    for (const combo of WINNER_COMBOS){
-      [a, b, c] = combo 
+    // check for all the winner combos
+    // to see if X or U won
+    for (const combo of WINNER_COMBOS) {
+       const [a, b, c] = combo 
       if (
         boardToCheck[a] && // 0 -> x u o
         boardToCheck[a] === boardToCheck[b] &&
@@ -56,7 +58,7 @@ function App() {
   const updateBoard = (index) => {
     // dont update this position
     // if theres something in it
-    if (board[index]) return
+    if (board[index] || winner) return
     // update the baord
     const newBoard = [ ... board]
     // spread & rest operator
@@ -65,6 +67,11 @@ function App() {
     // change turns
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
+    // check winner
+    const newWinner = checkWinner(newBoard)
+    if (newWinner) {
+      setWinner(newWinner)
+    }
   }
 
   return (
