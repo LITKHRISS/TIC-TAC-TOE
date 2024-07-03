@@ -71,6 +71,7 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
+      console.log(winner)
     }
   }
 
