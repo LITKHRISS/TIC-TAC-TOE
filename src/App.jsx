@@ -61,6 +61,13 @@ function App() {
       setWinner(null)
     }
 
+  const checkEndGame = (newBoard) => {
+    // check if its a tie
+    // if theres no blanc spaces
+    // on the board
+    return newBoard.every((sqaure) => sqaure != null)
+  }    
+
   const updateBoard = (index) => {
     // dont update this position
     // if theres something in it
@@ -77,6 +84,8 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false) // TIE
     }
   }
 
