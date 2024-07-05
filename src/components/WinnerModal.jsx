@@ -1,4 +1,4 @@
-import { Square } from "./Square.jsx"
+import { Square } from "./Square.jsx" 
 
 export function WinnerModal  ({winner, resetGame}) {
     if (winner === null) return null
@@ -11,7 +11,7 @@ export function WinnerModal  ({winner, resetGame}) {
         <h2> {winnerText } </h2>
 
         <header className='win'>
-          {winner && <square>{winner}</square>}
+          {winner && <Square>{winner}</Square>}
         </header>
 
         <footer>
