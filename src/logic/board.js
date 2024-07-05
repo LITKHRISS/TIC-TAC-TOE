@@ -16,3 +16,10 @@ export const checkWinnerFrom  = (boardToCheck) => {
     // if no winner
     return null 
     }
+
+    export const checkEndGame = (newBoard) => {
+        // check if its a tie
+        // if theres no blanc spaces
+        // on the board
+        return newBoard.every((square) => square != null)
+      }  

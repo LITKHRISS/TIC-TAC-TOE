@@ -1,9 +1,9 @@
 import { useState } from "react"
 import confetti from "canvas-confetti"
 
-import { Square } from "./components/square.jsx"
-import { TURNS} from "./constants.js"
-import { checkWinnerFrom } from "./logic/board.js"
+import { Square } from "./components/Square.jsx"
+import { TURNS, } from "./constants.js"
+import { checkWinnerFrom, checkEndGame } from "./logic/board.js"
 import { WinnerModal } from "./components/WinnerModal.jsx"
 
 
@@ -20,13 +20,6 @@ function App() {
       setTurn(TURNS.X)
       setWinner(null)
     }
-
-  const checkEndGame = (newBoard) => {
-    // check if its a tie
-    // if theres no blanc spaces
-    // on the board
-    return newBoard.every((square) => square != null)
-  }    
 
   const updateBoard = (index) => {
     // dont update this position
