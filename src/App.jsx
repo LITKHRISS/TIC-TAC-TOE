@@ -1,35 +1,11 @@
 import { useState } from "react"
 import confetti from "canvas-confetti"
 
-const TURNS = {
-  X: 'x',
-  O: 'o'
-}
+import { Square } from "./components/square.jsx"
+import { TURNS} from "./constants.js"
+import { checkWinnerFrom } from "./logic/board.js"
+import { WinnerModal } from "./components/WinnerModal.jsx"
 
-const Square = ({ children, isSelected, updateBoard, index }) => {
-  const className = `square ${isSelected ? 'is-selected' : ''} `
-
-  const handleClick = () => {
-    updateBoard(index)
-  }
-
-  return (
-    <div onClick= {handleClick} className= {className}>
-      {children}
-    </div>
-  )
-}
-
-const WINNER_COMBOS = [
-  [0,1,2],
-  [3,4,5],
-  [6,7,8],
-  [0,3,6],
-  [1,4,7],
-  [2,5,8],
-  [0,4,8],
-  [2,4,6] 
-]
 
 function App() {
   const [board, setBoard] = useState(
@@ -38,23 +14,6 @@ function App() {
   const [turn, setTurn] = useState(TURNS.X)
   // null means no winner, false means tie
   const [winner, setWinner] = useState(null) 
-
-  const checkWinner  = (boardToCheck) => {
-    // check for all the winner combos
-    // to see if X or U won
-    for (const combo of WINNER_COMBOS) {
-       const [a, b, c] = combo 
-      if (
-        boardToCheck[a] && // 0 -> x u o
-        boardToCheck[a] === boardToCheck[b] &&
-        boardToCheck[a] === boardToCheck[c]
-      ) {
-        return boardToCheck[a] // x u o
-      }
-    }
-    // if no winner
-    return null 
-    }
 
     const resetGame = () => {
       setBoard(Array(9).fill(null))
@@ -66,7 +25,7 @@ function App() {
     // check if its a tie
     // if theres no blanc spaces
     // on the board
-    return newBoard.every((sqaure) => sqaure != null)
+    return newBoard.every((square) => square != null)
   }    
 
   const updateBoard = (index) => {
@@ -82,7 +41,7 @@ function App() {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
     // check winner
-    const newWinner = checkWinner(newBoard)
+    const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
       confetti()
       setWinner(newWinner)
@@ -120,30 +79,7 @@ function App() {
       </Square>
     </section>
 
-      {
-        winner !== null && (
-          <section className="winner">
-            <div className="text">
-              <h2>
-                {
-                  winner === false
-                  ? 'Tie'
-                  : 'Won:'
-                }
-              </h2>
-
-                 <header className='win'>
-                  {winner && <square>{winner}</square>}
-                 </header>
-
-                 <footer>
-                  <button onClick={resetGame}>Play Again</button>
-                 </footer>
-            </div>
-          </section>
-        )
-      }
-
+      <WinnerModal resetGame={resetGame} winner={winner}/>
   </main>
   ) 
 }
