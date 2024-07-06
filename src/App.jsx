@@ -43,12 +43,14 @@ function App() {
     // spread & rest operator
     newBoard[index] = turn
     setBoard(newBoard)
-    // save game
-    window.localStorage.setItem('board', JSON.stringify(newBoard))
-    window.localStorage.setItem('turn', turn)
-    // change turns
+    // change turn
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
+    // save game
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('turn', newTurn)
+    // change turns
+    
     // check winner
     const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
