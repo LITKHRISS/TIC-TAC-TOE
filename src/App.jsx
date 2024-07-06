@@ -8,9 +8,16 @@ import { WinnerModal } from "./components/WinnerModal.jsx"
 
 
 function App() {
-  const [board, setBoard] = useState(
-    Array(9).fill(null)
-  )
+    console.log('render')
+
+    const [board, setBoard] = useState(() => {
+      console.log('inicializar estado')
+      const boardFromStorage = window.localStorage.getItem('board')
+      if (boardFromStorage) return JSON.parse(boardFromStorage)
+        return Array(9).fill(null)
+    })
+  
+    
   const [turn, setTurn] = useState(TURNS.X)
   // null means no winner, false means tie
   const [winner, setWinner] = useState(null) 
@@ -30,6 +37,9 @@ function App() {
     // spread & rest operator
     newBoard[index] = turn
     setBoard(newBoard)
+    // save game
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('turn', turn)
     // change turns
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
